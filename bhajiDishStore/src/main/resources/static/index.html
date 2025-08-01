@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Hunger Hub</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/script.js" defer></script>
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+/>
+</head>
+<body class="landing-page">
+  <header>
+    <nav class="navbar">
+      <div class="logo">The Hunger Hub</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="customize.html">Customize</a></li>
+        <li>
+          <a href="cart.html">
+            🛒 <span id="cart-count">0</span>
+          </a>
+        </li>
+        <li>
+		  <button id="logout-btn" title="Logout" class="logout-icon">
+		    <i class="fa-solid fa-power-off"></i>
+		  </button>
+		</li>
+      </ul>
+    </nav>
+  </header>
+
+ <main class="hero-section">
+  <div class="overlay">
+    <div class="hero-content">
+      <h1>Fresh & Mouth Watering Food</h1>
+      <h2>Delivered To You</h2>
+      <p>Order now and enjoy your favorite meals at home!</p>
+      <a href="menu.html" class="btn">Explore Menu</a>
+    </div>
+  </div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script>
+  (async () => {
+    const res = await fetch("http://localhost:8080/api/supabase-config");
+    const config = await res.json();
+    const supabase = window.supabase.createClient(config.url, config.key);
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+      window.location.href = "login.html";
+    }
+  })();
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    // Fetch Supabase config
+    const res = await fetch("http://localhost:8080/api/supabase-config");
+    const config = await res.json();
+    const supabase = window.supabase.createClient(config.url, config.key);
+
+    // Logout button logic
+    const logoutBtn = document.getElementById("logout-btn");
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", async () => {
+        try {
+          await supabase.auth.signOut(); // ← Supabase logout
+          localStorage.removeItem("user_id");
+          localStorage.removeItem("cart");
+          window.location.href = "login.html"; // redirect to login or combined page
+        } catch (error) {
+          console.error("Logout failed:", error.message);
+          alert("Something went wrong during logout.");
+        }
+      });
+    }
+  });
+</script>
+
+</body>
+</html>

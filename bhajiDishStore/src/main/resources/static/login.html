@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login / Signup - The Hunger Hub</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="js/auth.js" defer></script>
+</head>
+<body class="landing-page">
+  <header>
+    <nav class="navbar">
+      <div class="logo">The Hunger Hub</div>
+    </nav>
+  </header>
+
+  <main class="hero-section">
+    <div class="overlay">
+      <div class="hero-content">
+  		<div class="login-box">
+  <h2 id="form-title">Login</h2>
+
+  <div class="input-group">
+    <input type="email" id="email" placeholder="Email" required />
+  </div>
+
+    <div class="input-group">
+    <input type="password" id="password" placeholder="Password" required />
+    <div class="forgot-password">
+      <a href="#">Forgot password?</a>
+    </div>
+  </div>
+
+
+  <button id="auth-button" class="btn">Login</button>
+
+  <p id="toggle-auth" class="toggle-text">
+    Don't have an account? <span class="link">Signup</span>
+  </p>
+
+  <p id="auth-error" class="error-msg"></p>
+</div>
+
+    </div>
+  </div>
+  </main>
+  <script>
+	  document.addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
+    event.preventDefault(); // Prevents form submission if inside a <form>
+    const authButton = document.getElementById("auth-button");
+    if (authButton) {
+      authButton.click();
+    }
+  }
+});
+
+  </script>
+</body>
+</html>

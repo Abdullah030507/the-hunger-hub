@@ -3,7 +3,7 @@ let isLoginMode = true;
 
 async function fetchSupabaseConfig() {
   try {
-    const res = await fetch("http://localhost:8080/api/supabase-config");
+    const res = await fetch("/api/supabase-config");
     const config = await res.json();
     supabase = window.supabase.createClient(config.url, config.key);
   } catch (error) {

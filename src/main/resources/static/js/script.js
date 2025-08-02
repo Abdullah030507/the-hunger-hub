@@ -8,7 +8,7 @@ const cartCount = document.getElementById("cart-count");
 
 async function fetchSupabaseConfig() {
   try {
-    const res = await fetch("http://localhost:8080/api/supabase-config");
+    const res = await fetch("/api/supabase-config");
     const config = await res.json();
     supabase = window.supabase.createClient(config.url, config.key);
   } catch (error) {
@@ -65,7 +65,7 @@ async function updateCartUI() {
     }));
 
     try {
-      await fetch("http://localhost:8080/api/cart", {
+      await fetch("/api/cart", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
@@ -119,7 +119,7 @@ function checkout() {
     return;
   }
 
-  fetch("http://localhost:8080/api/checkout", {
+  fetch("/api/checkout", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(
@@ -141,7 +141,7 @@ function checkout() {
       alert("Order placed successfully! Total: ₹" + data.total);
       cart = [];
       try {
-  await fetch("http://localhost:8080/api/cart", {
+  await fetch("/api/cart", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -191,7 +191,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   await fetchSupabaseConfig();
 
   if (itemsContainer) {
-    fetch("http://localhost:8080/api/items")
+    fetch("/api/items")
       .then(res => res.json())
       .then(data => renderItems(data))
       .catch(err => console.error("Failed to fetch items:", err));

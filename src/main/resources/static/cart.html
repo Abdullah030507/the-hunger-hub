@@ -14,7 +14,11 @@
   <header>
     <nav class="navbar">
       <div class="logo">The Hunger Hub</div>
-      <ul class="nav-links">
+      	<!-- Hamburger Button -->
+			<button class="hamburger" id="hamburger-btn">
+			  <i class="fa-solid fa-bars"></i>
+			</button>
+      <ul class="nav-links" id="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="menu.html">Menu</a></li>
         <li><a href="customize.html">Customize</a></li>
@@ -79,6 +83,18 @@
     }
   });
 </script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const hamburgerBtn = document.getElementById("hamburger-btn");
+    const navLinks = document.getElementById("nav-links");
+
+    hamburgerBtn.addEventListener("click", () => {
+      navLinks.classList.toggle("nav-open");
+    });
+  });
+</script>
+
 
 </body>
 </html>

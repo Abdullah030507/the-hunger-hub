@@ -43,7 +43,7 @@ function addToCart(item) {
     source: i.source || "items"
   }));
 
-  fetch("http://localhost:8080/api/cart", {
+  fetch("/api/cart", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

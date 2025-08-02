@@ -1,12 +1,26 @@
-# Use Maven to build the project
-FROM maven:3.8.5-openjdk-17 AS build
-WORKDIR /app
+# Start from a Maven image with JDK 17
+FROM maven:3.9.6-eclipse-temurin-17 AS build
+
+# Set working directory
+WORKDIR /build
+
+# Copy source code into container
 COPY . .
+
+# Move into your project directory (where pom.xml is)
+WORKDIR /build/bhajiDishStore
+
+# Package the app
 RUN mvn clean package -DskipTests
 
-# Run the Spring Boot app
-FROM openjdk:17-jdk-slim
+# Use lightweight JRE image to run the app
+FROM eclipse-temurin:17-jre-alpine
+
+# Set working directory in final image
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
-EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+
+# Copy JAR from build stage
+COPY --from=build /build/bhajiDishStore/target/*.jar app.jar
+
+# Run the jar
+CMD ["java", "-jar", "app.jar"]

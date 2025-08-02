@@ -86,7 +86,7 @@ function renderIngredients(items) {
 
 
 document.addEventListener("DOMContentLoaded", () => {
-  fetch("http://localhost:8080/api/ingredients")
+  fetch("/api/ingredients")
     .then(res => res.json())
     .then(data => renderIngredients(data))
     .catch(err => console.error("Failed to fetch ingredients:", err));

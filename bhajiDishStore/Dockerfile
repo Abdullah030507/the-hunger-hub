@@ -1,5 +1,5 @@
 # Use Maven with JDK 18 for the build stage
-FROM maven:3.9.6-eclipse-temurin-18 AS build
+FROM maven:3.9.6-openjdk-18 AS build
 
 # Set working directory for build
 WORKDIR /build

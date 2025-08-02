@@ -422,3 +422,50 @@ button.add-to-cart-btn:hover {
 
 
 
+/* Hamburger Icon */
+.hamburger {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: white;
+  display: none;
+  cursor: pointer;
+}
+
+/* Default (desktop) layout */
+.navbar .nav-links {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Responsive styles for mobile */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block; /* show on mobile */
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 60px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.95);
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    z-index: 9999;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .nav-links.nav-open {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

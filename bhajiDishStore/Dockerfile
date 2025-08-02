@@ -1,26 +1,26 @@
-# Start from a Maven image with JDK 17
-FROM maven:3.9.6-eclipse-temurin-17 AS build
+# Use Maven with JDK 18 for the build stage
+FROM maven:3.9.6-eclipse-temurin-18 AS build
 
-# Set working directory
+# Set working directory for build
 WORKDIR /build
 
-# Copy source code into container
+# Copy entire project into the container
 COPY . .
 
-# Move into your project directory (where pom.xml is)
+# Move into your project directory where pom.xml is located
 WORKDIR /build/bhajiDishStore
 
-# Package the app
+# Package the app (skip tests)
 RUN mvn clean package -DskipTests
 
-# Use lightweight JRE image to run the app
-FROM eclipse-temurin:17-jre-alpine
+# Use lightweight JDK 18 image to run the app
+FROM eclipse-temurin:18-jdk-alpine
 
-# Set working directory in final image
+# Set working directory for runtime
 WORKDIR /app
 
-# Copy JAR from build stage
+# Copy the jar file from the build stage
 COPY --from=build /build/bhajiDishStore/target/*.jar app.jar
 
-# Run the jar
+# Command to run the app
 CMD ["java", "-jar", "app.jar"]

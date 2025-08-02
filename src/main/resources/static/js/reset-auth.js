@@ -16,18 +16,34 @@ initSupabase().then(() => {
   // Step 1: Handle reset request
   if (requestForm) {
     requestForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const email = document.getElementById("reset-email").value;
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: "https://the-hunger-hub.onrender.com/reset-password.html",
-      });
-      const msg = document.getElementById("reset-request-message");
-      if (error) {
-        msg.textContent = "❌ " + error.message;
-      } else {
-        msg.textContent = "✅ Reset link sent to your email.";
-      }
-    });
+  e.preventDefault();
+  const email = document.getElementById("reset-email").value;
+  const msg = document.getElementById("reset-request-message");
+
+  // Step 1: Check if user exists in our `users` table
+  const { data: user, error: fetchError } = await supabase
+    .from("users")
+    .select("email")
+    .eq("email", email)
+    .single();
+
+  if (fetchError || !user) {
+    msg.textContent = "❌ No account found with this email.";
+    return;
+  }
+
+  // Step 2: Proceed to send reset link
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: "https://the-hunger-hub.onrender.com/reset-password.html",
+  });
+
+  if (error) {
+    msg.textContent = "❌ " + error.message;
+  } else {
+    msg.textContent = "✅ Reset link sent to your email.";
+  }
+});
+
   }
 
   // Step 2: Handle actual reset via token
